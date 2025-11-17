@@ -4,8 +4,10 @@ set -euo pipefail
 # Robust PostgreSQL startup script
 # - Initializes a data directory if missing
 # - Configures to listen on all addresses and port 5001
-# - Starts the server and performs health checks
+# - Starts the server and performs health checks (pg_isready + psql)
 # - Imports a default schema if provided
+# - Exits with code 0 on success so preview can proceed; non-zero on failure.
+# - If local binaries are unavailable, use Database/run-postgres-docker.sh from the wrapper (startup.sh).
 
 DB_NAME="${DB_NAME:-myapp}"
 DB_USER="${DB_USER:-appuser}"
